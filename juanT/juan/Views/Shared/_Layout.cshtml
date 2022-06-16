@@ -37,7 +37,33 @@
                     <div class="row align-items-center">
                         <div class="col-lg-6">
                             <div class="welcome-message">
-                                <p>Welcome to Juan online store</p>
+                                <div class="top-end">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="user d-flex">
+                                            <i class="fa fa-user" style="font-size: 20px;margin-top:5px;"></i>
+                                            @User.Identity.Name
+                                        </div>
+
+                                        <ul>
+                                            <li>
+                                                <a style="cursor:pointer" href="/accaunt/logout">Log Out&nbsp;</a>
+                                            </li>
+                                        </ul>
+                                    }
+                                    else {
+
+                                <ul class="user-login d-flex">
+                                    <li >
+                                        <a style="cursor:pointer;color:black" href="/accaunt/login">Login&nbsp; </a>
+                                    </li>
+                                    <li>
+                                        <a style="cursor: pointer;color: black" href="/accaunt/register">&nbsp; Register</a>
+                                    </li>
+                                </ul>
+                                    }
+
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6 text-right">
@@ -70,6 +96,7 @@
                                         </ul>
                                     </li>
                                 </ul>
+                                
                             </div>
                         </div>
                     </div>

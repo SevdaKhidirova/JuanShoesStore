@@ -1,7 +1,9 @@
 using juan.DAL;
+using juan.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +32,17 @@ namespace juan
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
             });
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit=true;
+                options.Password.RequireLowercase=true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireUppercase = true;
+
+                options.User.RequireUniqueEmail = true;
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(30);
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,10 +60,9 @@ namespace juan
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

@@ -37,6 +37,7 @@ body {
 a {
   -webkit-transition: 0.4s;
   -o-transition: 0.4s;
+  cursor:pointer;
   transition: 0.4s; }
   a:hover, a:focus {
     color: #e3a51e;
